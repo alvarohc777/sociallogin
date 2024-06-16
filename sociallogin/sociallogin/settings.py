@@ -25,8 +25,16 @@ SECRET_KEY = "django-insecure-w!kojkg6#@q4g@^rs9dig4$&)$sgk2ss)g5uo4$m0qriecm(^w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:9000",
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:9000",
+    # "*",
+]
 
+FRONTEND_URL = "http://localhost:9000"
 
 # Application definition
 
@@ -44,12 +52,14 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "ninja",
+    "corsheaders",
     "api",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
