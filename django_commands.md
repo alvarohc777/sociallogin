@@ -73,7 +73,29 @@ SITE_ID = 2 # MUST SET TO ID OF SITE IN DB
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = 
+
+# 3 Agregar CORS y CSRF protection
+# Esto si el backend y el frontend están hosteados en 
+# distintos dominios
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:9000",
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:9000",
+    # "*",
+]
+
+# Instalar corsheaders
+pip install django-cors-headers
+
+MIDDLEWARE = [
+    ...,
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    ...,
+]
 
 # migrate
 python manage.py migrate 
@@ -84,6 +106,7 @@ python manage.py createsuperuser
 # 2. Get ID from site and verify it on the settings SITE_ID = 2
 # 3. Add social login provider secret token and key
 
+# Add router, api and url
 
 ## Continue with the frontend
 
