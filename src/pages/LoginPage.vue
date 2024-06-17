@@ -92,7 +92,7 @@
 <script setup>
 import { api } from 'src/boot/axios'
 import { ref } from 'vue'
-import { getCsrfToken } from 'src/lib/auth'
+import SocialLogin from 'src/components/SocialLogin.vue'
 const providers = ref([])
 const username = ref('')
 const password = ref('')
@@ -111,37 +111,4 @@ api
     console.log('headers: ', providers.value)
   })
   .catch(error => console.log(error))
-
-const postForm = (action, data) => {
-  const form = document.createElement('form')
-  form.method = 'POST'
-  form.action = action
-
-  for (const key in data) {
-    const input = document.createElement('input')
-    input.type = 'hidden'
-    input.name = key
-    input.value = data[key]
-    form.appendChild(input)
-  }
-
-  document.body.appendChild(form)
-  form.submit()
-}
-
-// Function to redirect to provider with necessary data
-const redirectToProvider = (
-  providerId,
-  callbackURL = '/api/login/redirect/',
-  // callbackURL = '/accounts/github/login/callback/',
-  process = 'login'
-  // process = 'connect'
-) => {
-  postForm('http://localhost:8000/_allauth/browser/v1/auth/provider/redirect', {
-    provider: providerId,
-    process,
-    callback_url: callbackURL,
-    csrfmiddlewaretoken: getCsrfToken()
-  })
-}
 </script>
