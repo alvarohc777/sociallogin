@@ -14,16 +14,15 @@
       >
         <div class="text-h5 text-weight-bold q-my-md">Login</div>
       </div>
-      <q-form autofocus>
+      <q-form autofocus @submit="submit($event)">
         <div class="flex flex-center justify-center">
           <div class="input">
             <q-input
               borderless
               :dense="isDense"
-              v-model="username"
-              :label="'Username'"
-              type="text"
-              :color="inputColor"
+              v-model="email"
+              :label="'Email'"
+              type="email"
               lazy-rules
             >
             </q-input>
@@ -35,13 +34,12 @@
               v-model="password"
               :label="'Password'"
               type="password"
-              :color="inputColor"
               lazy-rules
             >
             </q-input>
           </div>
         </div>
-        <div class="flex flex-between justify-center q-pt-md">
+        <div class="flex justify-center q-py-md q-gutter-md">
           <q-btn
             label="Submit"
             type="submit"
@@ -50,39 +48,26 @@
             class="button"
             dense
           />
+          <q-btn
+            label="Sign Up"
+            type="submit"
+            color="secondary"
+            size="md"
+            class="button"
+            dense
+            outline
+            :to="{ name: 'signup' }"
+          />
         </div>
       </q-form>
-      <div
-        v-if="providers.length > 0"
-        style="
-          font-size: 25px;
-          font-weight: bold;
-          align-items: center;
-          justify-content: center;
-          margin-top: 30px;
-          display: flex;
-          width: 100%;
-        "
-        class="flex column q-mb-lg"
-      >
-        <div class="text-caption">access with</div>
-        <q-btn
-          class="q-ma-sm button"
-          v-for="provider in providers"
-          :key="provider"
-          dense
-          @click="redirectToProvider(provider.id)"
-        >
-          {{ provider.name }}
-        </q-btn>
-      </div>
+      <social-login :providers="providers" process="login"></social-login>
     </q-card>
   </q-page>
 </template>
 
 <style lang="scss">
 .input {
-  width: 90%;
+  width: 80%;
 }
 .button {
   min-width: 100px;
@@ -93,10 +78,42 @@
 import { api } from 'src/boot/axios'
 import { ref } from 'vue'
 import SocialLogin from 'src/components/SocialLogin.vue'
+import { getCsrfToken } from 'src/lib/auth'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 const providers = ref([])
-const username = ref('')
+const email = ref('')
 const password = ref('')
+const loading = ref(false)
 const isDense = false
+
+const submit = async event => {
+  if (event) {
+    event.preventDefault()
+  }
+  loading.value = true
+  // const data = ref('')
+  api
+    .post(
+      '/_allauth/browser/v1/auth/login',
+      {
+        email: email.value,
+        password: password.value
+      },
+      { headers: { 'X-CSRFToken': getCsrfToken() } }
+    )
+    .then(response => {
+      // data.value = response
+      console.log('response: ', response.data)
+      router.push({ name: 'logout' })
+    })
+    .catch(error => console.log('error: ', error))
+    .finally(() => {
+      loading.value = false
+    })
+}
 
 api.get('/_allauth/browser/v1/config')
 api

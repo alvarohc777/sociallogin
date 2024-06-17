@@ -6,13 +6,13 @@
       font-weight: bold;
       align-items: center;
       justify-content: center;
-      margin-top: 30px;
+
       display: flex;
       width: 100%;
     "
-    class="flex column q-mb-lg"
+    class="flex column q-mb-lg q-mt-sm"
   >
-    <div class="text-caption">access with</div>
+    <div class="text-caption">or access with</div>
     <q-btn
       class="q-ma-sm button"
       v-for="provider in providers"
@@ -30,5 +30,4 @@ import { toRefs } from 'vue'
 
 const props = defineProps(['providers', 'process'])
 const { providers, process } = toRefs(props)
-console.log(providers)
 </script>
