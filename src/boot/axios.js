@@ -9,7 +9,7 @@ import axios from 'axios'
 // for each client)
 const BASE_URL = 'http://localhost:8000'
 const api = axios.create({ baseURL: BASE_URL, withCredentials: true })
-
+api.defaults.timeout = 5000
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
