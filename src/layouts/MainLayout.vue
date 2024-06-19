@@ -41,57 +41,36 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
     title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    caption: 'https://github.com/alvarohc777',
+    icon: 'fa-brands fa-github',
+    link: 'https://github.com/alvarohc777'
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'LinkedIn',
+    caption: 'Alvaro Herrada Coronell',
+    icon: 'fa-brands fa-linkedin',
+    link: 'https://www.linkedin.com/in/%C3%A1lvaro-andr%C3%A9s-herrada-coronell-4a6372230/'
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Frontend Repository',
+    caption: 'alvarohc777/sociallogin.frontend',
+    icon: 'fa-solid fa-code',
+    link: 'https://github.com/alvarohc777/sociallogin.frontend'
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    title: 'Backend Repository',
+    caption: 'alvarohc777/sociallogin.backend',
+    icon: 'fa-solid fa-server',
+    link: 'https://github.com/alvarohc777/sociallogin.backend'
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'django-allauth docs',
+    caption: 'docs.allauth.org',
+    icon: 'fa-solid fa-book',
+    link: 'https://docs.allauth.org/en/latest/'
   }
 ]
-
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  setup () {
     const leftDrawerOpen = ref(false)
 
     return {
