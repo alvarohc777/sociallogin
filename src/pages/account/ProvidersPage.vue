@@ -5,6 +5,7 @@
         title="Providers"
         :rows="providers"
         :columns="columns"
+        :key="providers"
         row-key="name"
         hide-bottom
         wrap-cells="true"
@@ -22,21 +23,13 @@ const columns = [
   { name: 'UID', label: 'UID', field: row => row.uid },
   { provider: 'provider', label: 'Provider', field: row => row.provider.name }
 ]
-const checkSession = token => {
-  api
-    .get('/_allauth/browser/v1/auth/session')
-    .then(response => {
-      console.log(response.data)
-      console.log(response.data.data.methods)
-    })
-    .catch(error => console.log('error message: ', error.message))
-}
+
 const checkProviders = () => {
   api.get('/_allauth/browser/v1/account/providers').then(response => {
     providers.value = response.data.data
     console.log(response.data.data)
   })
 }
-checkSession()
+
 checkProviders()
 </script>
