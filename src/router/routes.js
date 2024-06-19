@@ -6,6 +6,17 @@ const routes = [
       { path: '', name: 'index', component: () => import('pages/IndexPage.vue') },
       { path: '/login', name: 'login', component: () => import('pages/LoginPage.vue') },
       { path: '/signup', name: 'signup', component: () => import('pages/SignUpPage.vue') },
+      { path: '/logout', name: 'logout', component: () => import('pages/LogoutPage.vue'), meta: { requiresAuth: true } },
+      { path: '/auth', component: () => import('pages/AuthPage.vue'), meta: { requiresAuth: true } }
+    ]
+  },
+  {
+    path: '/user',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      { path: '', name: 'dashboard', component: () => import('pages/account/DashboardPage.vue'), meta: { requiresAuth: true } },
+      { path: 'providers', name: 'providers', component: () => import('pages/account/ProvidersPage.vue'), meta: { requiresAuth: true } },
+      { path: 'sessions', name: 'sessions', component: () => import('pages/account/SessionsPage.vue'), meta: { requiresAuth: true } }
     ]
   },
 
