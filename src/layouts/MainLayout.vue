@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh LpR lFr">
+    <q-header elevated reveal>
       <q-toolbar>
         <q-btn
           flat
@@ -11,13 +11,31 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-toolbar-title
+          ><router-link
+            :to="{ name: 'index' }"
+            style="text-decoration: none; color: inherit"
+          >
+            Social Login Example
+          </router-link>
+        </q-toolbar-title>
+        <div class="flex flex-center gt-xs">
+          <q-btn color="white" label="Login" :to="{ name: 'login' }" flat />
+          <q-btn color="white" label="Signup" :to="{ name: 'signup' }" flat />
+        </div>
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          class="lt-sm"
+          @click="toggleRightDrawer"
+        />
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer v-model="leftDrawerOpen" bordered overlay>
       <q-list>
         <q-item-label header> Essential Links </q-item-label>
 
@@ -28,6 +46,28 @@
         />
       </q-list>
     </q-drawer>
+    <q-drawer
+      side="right"
+      bordered
+      v-model="rightDrawerOpen"
+      overlay
+      content-class="bg-grey-3"
+      width="120"
+    >
+      <q-list bordered>
+        <q-item>
+          <q-btn color="primary" label="Login" :to="{ name: 'login' }" flat />
+        </q-item>
+        <q-item>
+          <q-btn
+            color="secondary"
+            label="Signup"
+            :to="{ name: 'signup' }"
+            flat
+          />
+        </q-item>
+      </q-list>
+    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -35,8 +75,8 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
@@ -71,15 +111,16 @@ const linksList = [
     link: 'https://docs.allauth.org/en/latest/'
   }
 ]
-    const leftDrawerOpen = ref(false)
 
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
+const leftDrawerOpen = ref(false)
+const rightDrawerOpen = ref(false)
+
+const essentialLinks = linksList
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
+const toggleRightDrawer = () => {
+  rightDrawerOpen.value = !rightDrawerOpen.value
+}
 </script>
