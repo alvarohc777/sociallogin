@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
+    "django.contrib.humanize",
+    "allauth.usersessions",
     "ninja",
     "corsheaders",
     "api",
@@ -67,6 +69,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "allauth.usersessions.middleware.UserSessionsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -173,6 +176,7 @@ HEADLESS_FRONTEND_URLS = {
     "account_reset_password": "/account/password/reset",
     "account_reset_password_from_key": "/account/password/reset/key/{key}",
     "account_signup": "/account/signup",
+    # "socialaccount_login_error": f"{FRONTEND_URL}/signup",
 }
 
 SESSION_COOKIE_NAME = "sessionid"  # Default, but ensure it's not changed
@@ -182,6 +186,8 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
+
+USERSESSIONS_TRACK_ACTIVITY = True
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 ACCOUNT_EMAIL_VERIFICATION = "none"
