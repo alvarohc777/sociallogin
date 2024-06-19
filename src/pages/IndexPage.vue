@@ -13,7 +13,7 @@
 
         <q-card-actions>
           <q-btn flat :to="{ name: 'login' }">Login</q-btn>
-          <q-btn flat :to="{ name: 'logout' }">Sign Up</q-btn>
+          <q-btn flat :to="{ name: 'signup' }">Sign Up</q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -25,4 +25,17 @@
   width: 40vh;
 }
 </style>
-<script setup></script>
+<script setup>
+import { api } from 'src/boot/axios'
+api
+  .get(
+    '/_allauth/browser/v1/config',
+
+    { headers: { accept: 'application/json' } }
+  )
+  .then(response => {
+    // Access headers from the response
+    console.log('headers: ', response.headers)
+  })
+  .catch(error => console.log(error))
+</script>
