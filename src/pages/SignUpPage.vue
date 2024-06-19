@@ -152,7 +152,15 @@ const submit = async event => {
         }
       })
     })
-    .catch(error => console.log('error: ', error))
+    .catch(error => {
+      console.log('error: ', error)
+      $q.notify({
+        color: 'negative',
+        textColor: 'white',
+        icon: 'error_outline',
+        message: `${error.response.data.errors[0].message}`
+      })
+    })
     .finally(() => {
       loading.value = false
     })

@@ -80,7 +80,9 @@ import { ref } from 'vue'
 import SocialLogin from 'src/components/SocialLogin.vue'
 import { getCsrfToken } from 'src/lib/auth'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 
+const $q = useQuasar()
 const router = useRouter()
 
 const providers = ref([])
@@ -109,7 +111,15 @@ const submit = async event => {
       console.log('response: ', response.data)
       router.push({ name: 'logout' })
     })
-    .catch(error => console.log('error: ', error))
+    .catch(error => {
+      console.log('error: ', error)
+      $q.notify({
+        color: 'negative',
+        textColor: 'white',
+        icon: 'error_outline',
+        message: `${error.response.data.errors[0].message}`
+      })
+    })
     .finally(() => {
       loading.value = false
     })
