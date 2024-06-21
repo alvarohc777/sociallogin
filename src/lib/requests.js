@@ -28,7 +28,7 @@ const redirectToProvider = (
   // process = 'connect'
 
 ) => {
-  postForm('http://localhost:8000/_allauth/browser/v1/auth/provider/redirect', {
+  postForm(`${BASE_URL}/_allauth/browser/v1/auth/provider/redirect`, {
     provider: providerId,
     process,
     callback_url: callbackURL,
