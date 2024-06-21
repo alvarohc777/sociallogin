@@ -129,7 +129,6 @@ const submit = async event => {
     })
 }
 
-api.get('/_allauth/browser/v1/config')
 api
   .get(
     '/_allauth/browser/v1/config',
