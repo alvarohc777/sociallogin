@@ -45,7 +45,15 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (['login', 'logout', 'signup'].includes(to.name)) {
+      checkAuth().then(isAuthenticated => {
+        if (isAuthenticated === true) {
+          next({ name: 'dashboard' })
+        } else {
+          next()
+        }
+      })
+    } else if (to.matched.some(record => record.meta.requiresAuth)) {
       checkAuth().then(isAuthenticated => {
         console.log('is authenticated', isAuthenticated)
         if (isAuthenticated === true) {
