@@ -29,14 +29,18 @@ IS_DEV = os.environ.get("is_prod", "") == "True"
 
 CORS_ALLOW_CREDENTIALS = True
 if IS_DEV == False:
+    SITE_ID = 3  # MUST SET TO ID OF SITE IN DB
     DEBUG = True
     CSRF_TRUSTED_ORIGINS = [
         "http://localhost:9000",
+        "http://localhost",
     ]
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:9000",
+        "http://localhost",
     ]
-    FRONTEND_URL = "http://localhost:9000"
+    # FRONTEND_URL = "http://localhost:9000"
+    FRONTEND_URL = "http://localhost"
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -46,14 +50,17 @@ if IS_DEV == False:
 
 else:
     DEBUG = False
+    SITE_ID = 1  # MUST SET TO ID OF SITE IN DB
     CSRF_TRUSTED_ORIGINS = [
         "https://sociallogin.azurewebsites.net",
+        "https://sociallogin-api.azurewebsites.net",
     ]
     CORS_ALLOWED_ORIGINS = [
         "https://sociallogin.azurewebsites.net",
+        "https://sociallogin-api.azurewebsites.net",
     ]
     FRONTEND_URL = "https://sociallogin.azurewebsites.net"
-    ALLOWED_HOSTS = ["sociallogin-api.azurewebsites.net"]
+    ALLOWED_HOSTS = ["sociallogin-api.azurewebsites.net", "localhost"]
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -64,6 +71,11 @@ else:
             "PORT": "5432",
         }
     }
+    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = "None"
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = "None"
+    CSRF_COOKIE_HTTPONLY = True
 
 # Application definition
 
@@ -203,7 +215,7 @@ HEADLESS_FRONTEND_URLS = {
 
 SESSION_COOKIE_NAME = "sessionid"  # Default, but ensure it's not changed
 SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Default, uses the database
-SITE_ID = 3  # MUST SET TO ID OF SITE IN DB
+
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
