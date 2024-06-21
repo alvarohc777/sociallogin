@@ -45,7 +45,7 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   Router.beforeEach((to, from, next) => {
-    if (['login', 'logout', 'signup'].includes(to.name)) {
+    if (['login', 'index', 'signup'].includes(to.name)) {
       checkAuth().then(isAuthenticated => {
         if (isAuthenticated === true) {
           next({ name: 'dashboard' })
