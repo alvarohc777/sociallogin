@@ -20,8 +20,30 @@
           </router-link>
         </q-toolbar-title>
         <div class="flex flex-center gt-xs">
-          <q-btn color="white" label="Login" :to="{ name: 'login' }" flat />
-          <q-btn color="white" label="Signup" :to="{ name: 'signup' }" flat />
+          <q-btn
+            color="white"
+            label="Dashboard"
+            :to="{ name: 'dashboard' }"
+            flat
+          />
+          <q-btn
+            color="white"
+            label="Sessions"
+            :to="{ name: 'sessions' }"
+            flat
+          />
+          <q-btn
+            color="white"
+            label="Providers"
+            :to="{ name: 'providers' }"
+            flat
+          />
+          <q-btn
+            outline
+            color="white"
+            label="Logout"
+            :to="{ name: 'logout' }"
+          />
         </div>
         <q-btn
           flat
@@ -52,18 +74,39 @@
       v-model="rightDrawerOpen"
       overlay
       content-class="bg-grey-3"
-      width="120"
+      width="150"
     >
       <q-list bordered>
         <q-item>
-          <q-btn color="primary" label="Login" :to="{ name: 'login' }" flat />
+          <q-btn
+            color="primary"
+            label="Dashboard"
+            :to="{ name: 'dashboard' }"
+            flat
+          />
         </q-item>
         <q-item>
           <q-btn
-            color="secondary"
-            label="Signup"
-            :to="{ name: 'signup' }"
+            color="primary"
+            label="Sessions"
+            :to="{ name: 'sessions' }"
             flat
+          />
+        </q-item>
+        <q-item>
+          <q-btn
+            color="primary"
+            label="Providers"
+            :to="{ name: 'providers' }"
+            flat
+          />
+        </q-item>
+        <q-item>
+          <q-btn
+            flat
+            color="secondary"
+            label="Logout"
+            :to="{ name: 'logout' }"
           />
         </q-item>
       </q-list>
