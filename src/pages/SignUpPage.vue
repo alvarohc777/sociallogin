@@ -77,7 +77,11 @@
           />
         </div>
       </q-form>
-      <social-login :providers="providers" process="connect" />
+      <social-login
+        :providers="providers"
+        process="connect"
+        caption="or sign up with"
+      />
     </q-card>
   </q-page>
 </template>

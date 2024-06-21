@@ -60,7 +60,11 @@
           />
         </div>
       </q-form>
-      <social-login :providers="providers" process="login"></social-login>
+      <social-login
+        :providers="providers"
+        process="login"
+        caption="or login with"
+      ></social-login>
     </q-card>
   </q-page>
 </template>

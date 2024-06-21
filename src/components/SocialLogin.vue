@@ -12,13 +12,13 @@
     "
     class="flex column q-mb-lg q-mt-sm"
   >
-    <div class="text-caption">or access with</div>
+    <div class="text-caption">{{ caption }}</div>
     <q-btn
       class="q-ma-sm button"
       v-for="provider in providers"
       :key="provider"
       dense
-      @click="redirectToProvider(provider.id, undefined, process)"
+      @click="redirectToProvider(provider.id, callbackURL, process)"
     >
       {{ provider.name }}
     </q-btn>
@@ -28,6 +28,16 @@
 import { redirectToProvider } from 'src/lib/requests'
 import { toRefs } from 'vue'
 
-const props = defineProps(['providers', 'process'])
-const { providers, process } = toRefs(props)
+// const props = defineProps(['providers', 'process', 'caption'])
+const props = defineProps({
+  providers: String,
+  process: String,
+  caption: String,
+  callbackURL: {
+    type: String,
+    default: '/api/login/redirect/'
+  }
+})
+const { providers, process, caption, callbackURL } = toRefs(props)
+console.log(callbackURL.value)
 </script>
