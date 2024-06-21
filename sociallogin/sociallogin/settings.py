@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,19 +23,47 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-w!kojkg6#@q4g@^rs9dig4$&)$sgk2ss)g5uo4$m0qriecm(^w"
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+IS_DEV = os.environ.get("is_prod", "") == "True"
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:9000",
-]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:9000",
-    # "*",
-]
+if IS_DEV == False:
+    DEBUG = True
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:9000",
+    ]
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:9000",
+    ]
+    FRONTEND_URL = "http://localhost:9000"
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
-FRONTEND_URL = "http://localhost:9000"
+else:
+    DEBUG = False
+    CSRF_TRUSTED_ORIGINS = [
+        "https://sociallogin.azurewebsites.net",
+    ]
+    CORS_ALLOWED_ORIGINS = [
+        "https://sociallogin.azurewebsites.net",
+    ]
+    FRONTEND_URL = "https://sociallogin.azurewebsites.net"
+    ALLOWED_HOSTS = ["sociallogin-api.azurewebsites.net"]
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "sociallogin",
+            "USER": "alvarohc777",
+            "PASSWORD": "finale-app#1",
+            "HOST": "finale-dev-app.postgres.database.azure.com",
+            "PORT": "5432",
+        }
+    }
 
 # Application definition
 
@@ -96,13 +125,6 @@ WSGI_APPLICATION = "sociallogin.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation
