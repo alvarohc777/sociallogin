@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  sociallogin.frontend:
+    container_name: sociallogin.frontend
+    image: sociallogin.frontend:v0.1
+
+    ports:
+      - 443:443
+      - 80:80
+
+    entrypoint: ["nginx", "-g", "daemon off;"]
