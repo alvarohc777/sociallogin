@@ -25,21 +25,13 @@ SECRET_KEY = "django-insecure-w!kojkg6#@q4g@^rs9dig4$&)$sgk2ss)g5uo4$m0qriecm(^w
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-IS_DEV = os.environ.get("is_prod", "") == "True"
+IS_PROD = os.environ.get("is_prod", "") == "True"
 
-CORS_ALLOW_CREDENTIALS = True
-if IS_DEV == False:
+# CORS_ALLOW_CREDENTIALS = True
+ALLOWED_HOSTS = ["sociallogin.azurewebsites.net", "localhost", "backend", "[::1]"]
+if IS_PROD == False:
     SITE_ID = 3  # MUST SET TO ID OF SITE IN DB
     DEBUG = True
-    CSRF_TRUSTED_ORIGINS = [
-        "http://localhost:9000",
-        "http://localhost",
-    ]
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:9000",
-        "http://localhost",
-    ]
-    # FRONTEND_URL = "http://localhost:9000"
     FRONTEND_URL = "http://localhost"
     DATABASES = {
         "default": {
@@ -48,19 +40,11 @@ if IS_DEV == False:
         }
     }
 
+
 else:
-    DEBUG = False
+    DEBUG = True
     SITE_ID = 1  # MUST SET TO ID OF SITE IN DB
-    CSRF_TRUSTED_ORIGINS = [
-        "https://sociallogin.azurewebsites.net",
-        "https://sociallogin-api.azurewebsites.net",
-    ]
-    CORS_ALLOWED_ORIGINS = [
-        "https://sociallogin.azurewebsites.net",
-        "https://sociallogin-api.azurewebsites.net",
-    ]
     FRONTEND_URL = "https://sociallogin.azurewebsites.net"
-    ALLOWED_HOSTS = ["sociallogin-api.azurewebsites.net", "localhost"]
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -71,14 +55,13 @@ else:
             "PORT": "5432",
         }
     }
-    CSRF_COOKIE_SECURE = True
-    CSRF_COOKIE_SAMESITE = "None"
-    SESSION_COOKIE_SECURE = True
-    SESSION_COOKIE_SAMESITE = "None"
-    CSRF_COOKIE_HTTPONLY = True
-
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+CSRF_TRUSTED_ORIGINS = [
+    "https://sociallogin.azurewebsites.net",
+]
 # Application definition
 
+USE_X_FORWARDED_HOST = True
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -94,23 +77,21 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
-    "django.contrib.humanize",
-    "allauth.usersessions",
+    # "django.contrib.humanize",
+    # "allauth.usersessions",
     "ninja",
-    "corsheaders",
     "api",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "allauth.usersessions.middleware.UserSessionsMiddleware",
+    # "allauth.usersessions.middleware.UserSessionsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -221,7 +202,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 
-USERSESSIONS_TRACK_ACTIVITY = True
+# USERSESSIONS_TRACK_ACTIVITY = True
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 ACCOUNT_EMAIL_VERIFICATION = "none"
