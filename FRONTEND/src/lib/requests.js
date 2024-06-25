@@ -15,7 +15,6 @@ const postForm = (action, data) => {
   }
 
   document.body.appendChild(form)
-  console.log(BASE_URL)
   form.submit()
 }
 
@@ -23,10 +22,7 @@ const postForm = (action, data) => {
 const redirectToProvider = (
   providerId,
   callbackURL = '/api/login/redirect/',
-  // callbackURL = '/accounts/github/login/callback/',
   process = 'login'
-  // process = 'connect'
-
 ) => {
   postForm(`${BASE_URL}/_allauth/browser/v1/auth/provider/redirect`, {
     provider: providerId,

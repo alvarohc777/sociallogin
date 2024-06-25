@@ -7,8 +7,10 @@ import axios from 'axios'
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const BASE_URL = process.env.DEV ? 'http://localhost:8000' : 'https://sociallogin.azurewebsites.net/'
-// const BASE_URL = 'http://localhost:8000'
+const BASE_URL = process.env.DEV
+  ? 'http://localhost'
+  : 'https://sociallogin.azurewebsites.net'
+
 const api = axios.create({ baseURL: BASE_URL, withCredentials: true })
 api.defaults.timeout = 5000
 export default boot(({ app }) => {
