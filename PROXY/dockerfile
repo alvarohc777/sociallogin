@@ -1,0 +1,8 @@
+FROM nginx:stable-perl AS dev
+WORKDIR /etc/nginx/conf.d/
+
+COPY ./default.conf.dev ./default.conf
+
+FROM dev AS prod
+COPY ./default.conf.prod ./default.conf
+

@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  sociallogin.backend:
+    build: 
+      context: ./BACKEND
+    container_name: backend
+    # image: sociallogin.backend:v0.1
+    command: python manage.py runserver 0.0.0.0:8000
+    expose:
+      - "8000"
+    environment:
+      - is_prod=True
+    develop:
+      watch:
+        - action: rebuild
+          path: ./BACKEND
+    
+
+      
+  sociallogin.frontend:
+    build: 
+      context: ./FRONTEND
+      target: prod
+    container_name: frontend
+    # image: sociallogin.frontend:v0.1
+
+    expose:
+      - 80
+
+    develop:
+      watch:
+        - action: rebuild
+          path: ./FRONTEND
+
+    entrypoint: ["nginx", "-g", "daemon off;"]
+
+  proxy:
+    build: PROXY
+    container_name: proxy
+    # image: 
+    ports:
+      - "80:80"
+    develop:
+      watch:
+        - action: rebuild
+          path: PROXY/
+
+

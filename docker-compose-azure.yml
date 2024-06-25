@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: backend
+    image: ghcr.io/alvarohc777/sociallogin-sociallogin.backend:v0.4
+    command: python manage.py runserver 0.0.0.0:8000
+    expose:
+      - "8000"
+    environment:
+      - is_prod=True
+    networks:
+      - mynetwork
+
+  frontend:
+    container_name: frontend
+    image: ghcr.io/alvarohc777/sociallogin-sociallogin.frontend:v0.4
+    expose:
+      - "80"
+    entrypoint: ["nginx", "-g", "daemon off;"]
+    networks:
+      - mynetwork
+    depends_on:
+      - backend
+
+  proxy:
+    container_name: proxy
+    image: ghcr.io/alvarohc777/sociallogin-proxy:v0.5
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
