@@ -1,0 +1,29 @@
+server {
+    listen       80;
+    #listen  [::]:80;
+    server_name  localhost;
+
+
+    location /_allauth {
+        proxy_pass http://backend:8000/_allauth;
+        proxy_set_header Host $host;
+    }
+    location /account {
+        proxy_pass http://backend:8000/account;
+        proxy_set_header Host $host;
+    }
+    location /api {
+        proxy_pass http://backend:8000/api;
+        proxy_set_header Host $host;
+    }
+    location /admin {
+        proxy_pass http://backend:8000/admin;
+        proxy_set_header Host $host;
+    }
+    location / {
+        proxy_pass http://frontend:9000/;
+        proxy_set_header Host $host;
+    } 
+
+}
+
