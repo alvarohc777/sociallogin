@@ -2,7 +2,11 @@ server {
     listen       80;
     #listen  [::]:80;
     server_name  localhost;
-
+    
+    location /static {
+        proxy_pass http://backend:8000/static;
+        proxy_set_header Host $host;
+    }
 
     location /_allauth {
         proxy_pass http://backend:8000/_allauth;
