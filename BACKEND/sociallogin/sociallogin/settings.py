@@ -26,11 +26,8 @@ SECRET_KEY = "django-insecure-w!kojkg6#@q4g@^rs9dig4$&)$sgk2ss)g5uo4$m0qriecm(^w
 
 # SECURITY WARNING: don't run with debug turned on in production!
 IS_PROD = os.environ.get("is_prod", "") == "True"
-
-# CORS_ALLOW_CREDENTIALS = True
 ALLOWED_HOSTS = ["sociallogin.azurewebsites.net", "localhost", "backend", "[::1]"]
 if IS_PROD == False:
-    SITE_ID = 3  # MUST SET TO ID OF SITE IN DB
     DEBUG = True
     FRONTEND_URL = "http://localhost"
     DATABASES = {
@@ -39,11 +36,8 @@ if IS_PROD == False:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-
-
 else:
     DEBUG = True
-    SITE_ID = 1  # MUST SET TO ID OF SITE IN DB
     FRONTEND_URL = "https://sociallogin.azurewebsites.net"
     DATABASES = {
         "default": {
@@ -61,7 +55,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 # Application definition
 
-USE_X_FORWARDED_HOST = True
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -71,14 +64,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "allauth",
     "allauth.account",
-    "django.contrib.sites",
     "allauth.headless",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.github",
     "allauth.socialaccount.providers.discord",
-    # "django.contrib.humanize",
-    # "allauth.usersessions",
+    "allauth.usersessions",
     "ninja",
     "api",
 ]
@@ -90,9 +81,8 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
-    # "allauth.usersessions.middleware.UserSessionsMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "sociallogin.urls"
@@ -162,10 +152,10 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 HEADLESS_ONLY = True
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
+AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
-]
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -195,7 +185,7 @@ HEADLESS_FRONTEND_URLS = {
 }
 
 SESSION_COOKIE_NAME = "sessionid"  # Default, but ensure it's not changed
-SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Default, uses the database
+
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
