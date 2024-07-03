@@ -27,7 +27,7 @@
 
       <div class="q-pa-md" style="max-width: 90vw">
         <social-login
-          :providers="availableProviders"
+          :providers="filteredAvailableProviders"
           process="connect"
           caption="Connect additional providers"
           callbackURL="/api/login/connect-provider/"
@@ -39,7 +39,7 @@
 
 <script setup>
 import { api } from 'src/boot/axios'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import SocialLogin from 'src/components/SocialLogin.vue'
 import { getCsrfToken } from 'src/lib/auth'
 const availableProviders = ref([])
@@ -87,4 +87,5 @@ function disconnectSession (provider, account) {
       console.log('error message: ', error.request.status)
     })
 }
+  return availableProviders.value.filter(
 </script>
