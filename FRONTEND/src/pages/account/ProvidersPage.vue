@@ -9,7 +9,7 @@
           :key="providers"
           row-key="name"
           hide-bottom
-          wrap-cells="true"
+          :wrap-cells="true"
         >
           <template v-slot:body-cell-disconnect="props">
             <q-td key="currentSession" :props="props">
@@ -18,7 +18,7 @@
                 dense
                 @click="disconnectSession(props.row.provider.id, props.row.uid)"
               >
-                Logout
+                Disconnect
               </q-btn>
             </q-td>
           </template>
@@ -42,6 +42,7 @@ import { api } from 'src/boot/axios'
 import { ref, computed } from 'vue'
 import SocialLogin from 'src/components/SocialLogin.vue'
 import { getCsrfToken } from 'src/lib/auth'
+
 const availableProviders = ref([])
 const providers = ref([])
 const columns = [
@@ -57,6 +58,7 @@ const checkProviders = () => {
     console.log('providers', response.data.data)
   })
 }
+
 api
   .get('/_allauth/browser/v1/config', {
     headers: { accept: 'application/json' }
@@ -87,5 +89,10 @@ function disconnectSession (provider, account) {
       console.log('error message: ', error.request.status)
     })
 }
+const filteredAvailableProviders = computed(() => {
+  const providerNames = providers.value.map(provider => provider.provider.name)
   return availableProviders.value.filter(
+    availableProvider => !providerNames.includes(availableProvider.name)
+  )
+})
 </script>

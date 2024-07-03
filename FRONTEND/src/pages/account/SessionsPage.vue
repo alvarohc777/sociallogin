@@ -8,7 +8,7 @@
           :columns="columns"
           row-key="name"
           hide-bottom
-          wrap-cells="true"
+          :wrap-cells="true"
         >
           <template v-slot:body-cell-currentSession="props">
             <q-td key="currentSession" :props="props">

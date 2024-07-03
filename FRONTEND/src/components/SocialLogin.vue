@@ -30,7 +30,7 @@ import { toRefs } from 'vue'
 
 // const props = defineProps(['providers', 'process', 'caption'])
 const props = defineProps({
-  providers: String,
+  providers: Array,
   process: String,
   caption: String,
   callbackURL: {

@@ -52,7 +52,7 @@
       v-model="rightDrawerOpen"
       overlay
       content-class="bg-grey-3"
-      width="120"
+      :width="120"
     >
       <q-list bordered>
         <q-item>
