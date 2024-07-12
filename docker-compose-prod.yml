@@ -5,8 +5,7 @@ services:
     build: 
       context: ./BACKEND
     container_name: backend
-    # image: sociallogin.backend:v0.1
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn -b 0.0.0.0:8000 sociallogin.wsgi
     expose:
       - "8000"
     environment:

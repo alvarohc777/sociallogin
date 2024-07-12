@@ -6,10 +6,11 @@ charset-normalizer==3.3.2
 cryptography==42.0.7
 Django==5.0.4
 django-allauth==0.63.3
-django-cors-headers==4.3.1
 django-ninja==1.1.0
+gunicorn==22.0.0
 idna==3.7
 oauthlib==3.2.2
+packaging==24.1
 psycopg==3.1.19
 psycopg-binary==3.1.19
 pycparser==2.22
