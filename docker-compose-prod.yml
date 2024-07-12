@@ -12,6 +12,11 @@ services:
       - "8000"
     environment:
       - is_prod=True
+      - POSTGRES_NAME=
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST=
+      - SECRET_KEY=
     develop:
       watch:
         - action: rebuild

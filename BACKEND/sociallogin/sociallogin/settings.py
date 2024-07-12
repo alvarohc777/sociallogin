@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-w!kojkg6#@q4g@^rs9dig4$&)$sgk2ss)g5uo4$m0qriecm(^w"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -41,16 +41,17 @@ if IS_PROD == False:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
 else:
     DEBUG = True
     FRONTEND_URL = "https://sociallogin.azurewebsites.net"
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "sociallogin",
-            "USER": "alvarohc777",
-            "PASSWORD": "finale-app#1",
-            "HOST": "finale-dev-app.postgres.database.azure.com",
+            "NAME": os.environ.get("POSTGRES_NAME"),
+            "USER": os.environ.get("POSTGRES_USER"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+            "HOST": os.environ.get("POSTGRES_HOST"),
             "PORT": "5432",
         }
     }
@@ -58,6 +59,7 @@ else:
 CSRF_TRUSTED_ORIGINS = [
     "https://sociallogin.azurewebsites.net",
 ]
+
 # Application definition
 
 INSTALLED_APPS = [
