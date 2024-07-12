@@ -5,7 +5,5 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY ./sociallogin/ /code/
-
-
-# docker build --pull --rm -f "Dockerfile" -t radowski.backend:v1.5 "."
-# docker image push radowski.azurecr.io/radowski.backend:v1.5 
+RUN mkdir static
+RUN python manage.py collectstatic --noinput
