@@ -5,33 +5,32 @@ services:
     build: ./BACKEND
     container_name: backend
     command: gunicorn -b 0.0.0.0:8000 sociallogin.wsgi 
+    volumes:
+      - static_volume:/static
     expose:
       - "8000"
+    ports:
+      - "8000:8000"
     environment:
       - is_prod=False
     develop:
       watch:
         - action: rebuild
           path: ./BACKEND
-
-    
-
       
   sociallogin.frontend:
     build: 
       context: ./FRONTEND
       target: develop
     container_name: frontend
-
     expose: 
       - 9000
-
+    ports:
+      - "9000:9000"
     develop:
       watch:
         - action: rebuild
           path: ./FRONTEND 
-
-
     entrypoint: /bin/sh -c "quasar dev -p 9000"
   
   proxy:
@@ -39,9 +38,16 @@ services:
       context: ./PROXY
       target: dev
     container_name: proxy
+    volumes:
+      - static_volume:/static
     ports:
       - "80:80"
     develop:
       watch:
         - action: rebuild
           path: PROXY/
+
+volumes:
+  static_volume:
+
+

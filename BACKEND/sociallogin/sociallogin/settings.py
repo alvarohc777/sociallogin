@@ -26,7 +26,12 @@ SECRET_KEY = "django-insecure-w!kojkg6#@q4g@^rs9dig4$&)$sgk2ss)g5uo4$m0qriecm(^w
 
 # SECURITY WARNING: don't run with debug turned on in production!
 IS_PROD = os.environ.get("is_prod", "") == "True"
-ALLOWED_HOSTS = ["sociallogin.azurewebsites.net", "localhost", "backend", "[::1]"]
+ALLOWED_HOSTS = [
+    "sociallogin.azurewebsites.net",
+    "localhost",
+    "backend",
+    "[::1]",
+]
 if IS_PROD == False:
     DEBUG = True
     FRONTEND_URL = "http://localhost"
@@ -143,7 +148,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, "/static")
 STATIC_URL = "static/"
 
 # Default primary key field type

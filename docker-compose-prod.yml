@@ -6,6 +6,8 @@ services:
       context: ./BACKEND
     container_name: backend
     command: gunicorn -b 0.0.0.0:8000 sociallogin.wsgi
+    volumes:
+      - static_volume:/static
     expose:
       - "8000"
     environment:
@@ -37,7 +39,8 @@ services:
   proxy:
     build: PROXY
     container_name: proxy
-    # image: 
+    volumes:
+      - static_volume:/static
     ports:
       - "80:80"
     develop:
@@ -45,4 +48,5 @@ services:
         - action: rebuild
           path: PROXY/
 
-
+volumes:
+  static_volume:

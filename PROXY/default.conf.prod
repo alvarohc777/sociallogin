@@ -4,11 +4,8 @@ server {
     server_name  sociallogin.azurewebsites.net;
 
     location /static {
-        proxy_pass http://backend:8000/static;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;  # Ensure this line is present
-        proxy_set_header X-Forwarded-For $remote_addr;
-        
+        autoindex on; 
+        alias /static;
     }
 
     location /_allauth {

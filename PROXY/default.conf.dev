@@ -4,29 +4,39 @@ server {
     server_name  localhost;
     
     location /static {
-        proxy_pass http://backend:8000/static;
-        proxy_set_header Host $host;
+        autoindex on; 
+        alias /static;
     }
 
     location /_allauth {
         proxy_pass http://backend:8000/_allauth;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;  # Ensure this line is present
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
     location /account {
         proxy_pass http://backend:8000/account;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;  # Ensure this line is present
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
     location /api {
         proxy_pass http://backend:8000/api;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;  # Ensure this line is present
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
     location /admin {
         proxy_pass http://backend:8000/admin;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;  # Ensure this line is present
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
     location / {
         proxy_pass http://frontend:9000/;
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;  # Ensure this line is present
+        proxy_set_header X-Forwarded-For $remote_addr;
     } 
 
 }
