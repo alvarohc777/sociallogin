@@ -1,6 +1,8 @@
 # sociallogin (sociallogin)
 
-Quasar SPA for Social Login with django-allauth headless
+Django-Allauth Social Login
+Headless social login app with Django-Allauth and Django-Ninja backend, Quasar (Vue.js) frontend. Hosted on Azure Web App with Nginx and Gunicorn. Supports Google, GitHub, and Discord logins, tracks active sessions, and manages providers.
+
 
 ## Install the dependencies
 ```bash
