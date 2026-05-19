@@ -1,57 +1,57 @@
 version: '3.7'
 
 services:
-  sociallogin.backend:
-    build: 
-      context: ./BACKEND
+  backend:
     container_name: backend
-    command: gunicorn -b 0.0.0.0:8000 sociallogin.wsgi
+    image: ghcr.io/alvarohc777/sociallogin.backend:v1.0
+    command: gunicorn -b 0.0.0.0:8000 sociallogin.wsgi 
     volumes:
       - static_volume:/static
     expose:
       - "8000"
     environment:
       - is_prod=True
+      - ALLOWED_HOSTS=
+      - CORS_ALLOWED_ORIGINS=
+      - FRONTEND_URL=
+      - CSRF_TRUSTED_ORIGINS=
       - POSTGRES_NAME=
       - POSTGRES_USER=
       - POSTGRES_PASSWORD=
       - POSTGRES_HOST=
+      - POSTGRES_PORT=
+      - ACCOUNT_DEFAULT_HTTP_PROTOCOL=https
       - SECRET_KEY=
-    develop:
-      watch:
-        - action: rebuild
-          path: ./BACKEND
-    
+    networks:
+      - mynetwork
 
-      
-  sociallogin.frontend:
-    build: 
-      context: ./FRONTEND
-      target: prod
+  frontend:
     container_name: frontend
-    # image: sociallogin.frontend:v0.1
-
+    image: ghcr.io/alvarohc777/sociallogin.frontend:v1.0
     expose:
-      - 80
-
-    develop:
-      watch:
-        - action: rebuild
-          path: ./FRONTEND
-
+      - "80"
     entrypoint: ["nginx", "-g", "daemon off;"]
+    networks:
+      - mynetwork
+    depends_on:
+      - backend
 
   proxy:
-    build: PROXY
     container_name: proxy
+    image: ghcr.io/alvarohc777/sociallogin.proxy:v1.0
     volumes:
       - static_volume:/static
     ports:
       - "80:80"
-    develop:
-      watch:
-        - action: rebuild
-          path: PROXY/
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
 
 volumes:
   static_volume:

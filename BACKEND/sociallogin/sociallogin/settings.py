@@ -26,25 +26,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 IS_PROD = os.environ.get("is_prod", "") == "True"
-ALLOWED_HOSTS = [
-    "sociallogin.azurewebsites.net",
-    "localhost",
-    "backend",
-    "[::1]",
-]
-if IS_PROD == False:
-    DEBUG = True
-    FRONTEND_URL = "http://localhost"
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+DEBUG = not IS_PROD
 
-else:
-    DEBUG = True
-    FRONTEND_URL = "https://sociallogin.azurewebsites.net"
+if IS_PROD:
+    ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", None).split(",")
+    CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", None).split(",")
+    FRONTEND_URL = os.environ.get("FRONTEND_URL", None)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -52,13 +39,28 @@ else:
             "USER": os.environ.get("POSTGRES_USER"),
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
             "HOST": os.environ.get("POSTGRES_HOST"),
-            "PORT": "5432",
+            "PORT": os.environ.get("POSTGRES_PORT"),
         }
     }
-    ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-CSRF_TRUSTED_ORIGINS = [
-    "https://sociallogin.azurewebsites.net",
-]
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.environ.get("ACCOUNT_DEFAULT_HTTP_PROTOCOL", None)
+    CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", None).split(",")
+else:
+    ALLOWED_HOSTS = [
+        "sociallogin.azurewebsites.net",
+        "localhost",
+        "backend",
+        "[::1]",
+    ]
+    FRONTEND_URL = "http://localhost"
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost", 
+    ]
 
 # Application definition
 
@@ -184,11 +186,11 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 HEADLESS_FRONTEND_URLS = {
-    "account_confirm_email": "/account/verify-email/{key}",
-    "account_reset_password": "/account/password/reset",
-    "account_reset_password_from_key": "/account/password/reset/key/{key}",
-    "account_signup": "/account/signup",
-    # "socialaccount_login_error": f"{FRONTEND_URL}/signup",
+    "account_confirm_email": f"{FRONTEND_URL}/account/verify-email/{{key}}",
+    "account_reset_password": f"{FRONTEND_URL}/account/password/reset",
+    "account_reset_password_from_key": f"{FRONTEND_URL}/account/password/reset/key/{{key}}",
+    "account_signup": f"{FRONTEND_URL}/account/signup",
+    "socialaccount_login_error": f"google.com" 
 }
 
 SESSION_COOKIE_NAME = "sessionid"  # Default, but ensure it's not changed
