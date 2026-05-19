@@ -5,7 +5,7 @@ RUN npm install -g @quasar/cli
 COPY . .
 RUN npm install
 
-FROM develop as build
+FROM develop AS build
 RUN quasar build
 
 # Stage 2: Final Stage
