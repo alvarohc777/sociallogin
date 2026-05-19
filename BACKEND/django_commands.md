@@ -1,6 +1,11 @@
 
 ``` python
-# 1. Install django-allauth
+
+# 0 Create a venv inside /BACKEND
+python3.14 -m venv env
+source env/bin/activate
+
+# 1. Install django-allauth 
 pip install django-allauth
 pip install django-allauth[socialaccount]
 
